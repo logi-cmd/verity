@@ -1,0 +1,23 @@
+[package]
+name = "verity-desktop"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+authors.workspace = true
+description = "Verity desktop application"
+
+[build-dependencies]
+tauri-build = { version = "2", features = [] }
+
+[dependencies]
+verity-core = { path = "../../crates/verity-core" }
+verity-adapters = { path = "../../crates/verity-adapters" }
+verity-runner = { path = "../../crates/verity-runner" }
+serde.workspace = true
+serde_json.workspace = true
+chrono.workspace = true
+uuid.workspace = true
+tauri = { version = "2", features = [] }
+tauri-plugin-dialog = "2"
+keyring = "3.6"
+arboard = "3.6"

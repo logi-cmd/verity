@@ -1,0 +1,9 @@
+# Verity
+
+Verity is an MPL-2.0 local repository run-verification tool. It determines whether a trusted but unfamiliar repository can complete its explicit install, offline build, test, launch, and machine-oracle path in the current recorded environment.
+
+It does not infer business purpose, manage plugins, provide a knowledge graph, score delivery readiness, analyze malicious repositories, or claim remote certification.
+
+Implemented deterministic detection: Node.js, Deno, Bun, static web, Rust, Tauri, Python, Go, Godot, Docker Compose, Java, Kotlin, C, C++, .NET, PHP, and Ruby. Public support remains gated on the documented real-project/platform matrix. A `verified` receipt requires every planned phase and a target-specific machine oracle to pass. Process, port, or window signals alone are insufficient.
+
+The public beta is not yet available. No unsigned installer should be represented as downloadable.

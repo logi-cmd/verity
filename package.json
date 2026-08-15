@@ -1,0 +1,26 @@
+{
+  "name": "verity",
+  "version": "0.1.0-beta.1",
+  "private": true,
+  "description": "Deterministic local run verification for unfamiliar trusted repositories",
+  "license": "MPL-2.0",
+  "type": "module",
+  "scripts": {
+    "test": "npm run test:contracts && npm run test:rust",
+    "test:contracts": "node --test tests/verity-product-contract.test.js tests/verification-workspace-model.test.js tests/evidence-field-geometry.test.js tests/receipt-verification-contract.test.js",
+    "test:licenses": "node scripts/audit-licenses.mjs",
+    "test:site": "node scripts/validate-site.mjs",
+    "test:rust": "cargo test --workspace",
+    "build": "npm run build:desktop-web && cargo build --workspace",
+    "build:desktop-web": "npm --prefix desktop run build:web",
+    "check": "cargo check --workspace && npm run test:contracts",
+    "dev:desktop": "npm --prefix desktop run dev:desktop"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/logi-cmd/verity.git"
+  }
+}

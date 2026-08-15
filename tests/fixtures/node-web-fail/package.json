@@ -1,0 +1,10 @@
+{
+  "name": "verity-node-web-failure-fixture",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "build": "node build.mjs",
+    "test": "node failing-test.mjs",
+    "start": "node server.mjs"
+  }
+}

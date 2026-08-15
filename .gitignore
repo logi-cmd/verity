@@ -1,0 +1,42 @@
+node_modules/
+.agent-guardrails/
+.omx/
+ref/
+*.spline
+/package-lock.json
+/target/
+/output/
+/.playwright-cli/
+.worktrees/
+*.log
+*.crt
+*.pem
+*.cer
+.DS_Store
+Thumbs.db
+
+# Local/internal planning notes.
+docs/internal-issues.md
+docs/LOCAL_INDEX.md
+docs/superpowers/
+.impeccable.md
+.gstack/
+desktop/src-tauri/target/
+desktop/src-tauri/gen/
+
+# Desktop generated build and visual QA artifacts.
+desktop/dist/
+desktop/qa/
+desktop/preview-*.png
+desktop/release-artifacts/
+desktop/release-artifacts-raw/
+
+# Local visual research and scratch verification artifacts.
+tmp/
+reference/
+desktop/design/
+/desktop/src/app/assets/brand-guard-shield.png
+/1.png
+/2.png
+/3.png
+/4.png

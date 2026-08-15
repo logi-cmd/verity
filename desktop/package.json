@@ -1,0 +1,34 @@
+{
+  "name": "@verity/desktop",
+  "version": "0.1.0-beta.1",
+  "private": true,
+  "description": "Verity deterministic local run verification desktop application",
+  "license": "MPL-2.0",
+  "type": "module",
+  "scripts": {
+    "dev": "tauri dev",
+    "dev:desktop": "powershell -NoProfile -ExecutionPolicy Bypass -File ./scripts/open-desktop-dev.ps1",
+    "build": "tauri build",
+    "check": "tauri info",
+    "icons:build": "node scripts/generate-app-icon.mjs",
+    "dev:web": "vite --host 127.0.0.1 --port 1420",
+    "build:web": "vite build",
+    "preview:web": "vite preview --host 127.0.0.1 --port 1420"
+  },
+  "dependencies": {
+    "@fontsource-variable/geist": "5.2.8",
+    "@fontsource-variable/geist-mono": "5.2.8",
+    "delaunator": "5.1.0",
+    "lucide-react": "^0.468.0",
+    "motion": "^13.0.0",
+    "ogl": "^1.0.11",
+    "react": "^19.2.5",
+    "react-dom": "^19.2.5"
+  },
+  "devDependencies": {
+    "@tauri-apps/cli": "^2.0.0",
+    "@vitejs/plugin-react": "^6.0.1",
+    "sharp": "^0.35.3",
+    "vite": "^8.0.10"
+  }
+}

@@ -1,0 +1,114 @@
+name: Release signed Windows x64 installer
+
+on:
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: Existing source release tag to receive signed assets
+        required: true
+        default: v0.1.0-beta.1
+
+permissions:
+  contents: write
+
+jobs:
+  signed-windows:
+    runs-on: windows-latest
+    env:
+      WINDOWS_PFX_BASE64: ${{ secrets.WINDOWS_PFX_BASE64 }}
+      WINDOWS_PFX_PASSWORD: ${{ secrets.WINDOWS_PFX_PASSWORD }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.tag }}
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          components: rustfmt
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: desktop/package-lock.json
+      - uses: Swatinem/rust-cache@v2
+      - name: Require trusted signing secrets
+        shell: pwsh
+        run: |
+          if ([string]::IsNullOrWhiteSpace($env:WINDOWS_PFX_BASE64)) { throw "WINDOWS_PFX_BASE64 is required" }
+          if ([string]::IsNullOrWhiteSpace($env:WINDOWS_PFX_PASSWORD)) { throw "WINDOWS_PFX_PASSWORD is required" }
+      - run: node scripts/validate-windows-release-evidence.mjs
+      - run: npm --prefix desktop ci
+      - run: cargo fmt --all -- --check
+      - run: cargo test --workspace
+      - run: npm run test:contracts
+      - run: npm run test:licenses
+      - run: npm run test:site
+      - run: npm run build:desktop-web
+      - name: Import code-signing certificate
+        shell: pwsh
+        run: |
+          $pfx = Join-Path $env:RUNNER_TEMP "verity-signing.pfx"
+          [IO.File]::WriteAllBytes($pfx, [Convert]::FromBase64String($env:WINDOWS_PFX_BASE64))
+          $password = ConvertTo-SecureString -String $env:WINDOWS_PFX_PASSWORD -Force -AsPlainText
+          $certificate = Import-PfxCertificate -FilePath $pfx -CertStoreLocation Cert:\CurrentUser\My -Password $password
+          if (-not $certificate.Thumbprint) { throw "The code-signing certificate could not be imported" }
+          $configPath = Join-Path $env:RUNNER_TEMP "tauri.windows-signing.json"
+          [ordered]@{
+            bundle = [ordered]@{
+              windows = [ordered]@{
+                certificateThumbprint = $certificate.Thumbprint
+                digestAlgorithm = 'sha256'
+                timestampUrl = 'http://timestamp.digicert.com'
+              }
+            }
+          } | ConvertTo-Json -Depth 5 | Set-Content $configPath
+          "VERITY_TAURI_SIGNING_CONFIG=$configPath" | Add-Content $env:GITHUB_ENV
+          "VERITY_CERT_THUMBPRINT=$($certificate.Thumbprint)" | Add-Content $env:GITHUB_ENV
+          Remove-Item -LiteralPath $pfx -Force
+      - name: Build signed MSI and NSIS installers
+        run: npm --prefix desktop run build -- --config "$env:VERITY_TAURI_SIGNING_CONFIG"
+      - name: Verify and collect signed assets
+        shell: pwsh
+        run: |
+          $signTool = Get-ChildItem "${env:ProgramFiles(x86)}\Windows Kits\10\bin" -Filter signtool.exe -Recurse |
+            Where-Object FullName -Match '\\x64\\' | Sort-Object FullName -Descending | Select-Object -First 1
+          if (-not $signTool) { throw "signtool.exe was not found" }
+          $app = Get-ChildItem target/release -File -Filter '*.exe'
+          if (-not $app) { throw "Tauri did not produce a Windows application executable" }
+          $assets = Get-ChildItem target/release/bundle -Recurse -File |
+            Where-Object Extension -In '.msi', '.exe'
+          if (-not $assets) { throw "Tauri did not produce MSI or NSIS assets" }
+          New-Item release -ItemType Directory -Force | Out-Null
+          foreach ($signedFile in @($app) + @($assets)) {
+            & $signTool.FullName verify /pa /all $signedFile.FullName
+            if ($LASTEXITCODE -ne 0) { throw "Authenticode verification failed for $($signedFile.Name)" }
+          }
+          foreach ($asset in $assets) {
+            Copy-Item $asset.FullName release/$($asset.Name)
+          }
+          Get-ChildItem release -File | Get-FileHash -Algorithm SHA256 |
+            ForEach-Object { "$($_.Hash.ToLower())  $([IO.Path]::GetFileName($_.Path))" } |
+            Set-Content release/SHA256SUMS.txt
+      - name: Build release manifest and acceptance report
+        shell: pwsh
+        run: |
+          $assets = Get-ChildItem release -File | Where-Object Name -ne 'release-manifest.json'
+          $manifest = [ordered]@{
+            schema = 'verity-release-manifest.v1'
+            version = '0.1.0-beta.1'
+            platform = 'windows-x64'
+            trustedSignature = $true
+            files = @($assets | ForEach-Object { [ordered]@{ name = $_.Name; sha256 = (Get-FileHash $_.FullName -Algorithm SHA256).Hash.ToLower() } })
+          }
+          $manifest | ConvertTo-Json -Depth 5 | Set-Content release/release-manifest.json
+          Copy-Item docs/qa/windows-x64-release-evidence.json release/windows-x64-acceptance-report.json
+      - name: Upload signed assets to existing release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh release upload "${{ inputs.tag }}" release/* --clobber
+      - name: Remove imported signing certificate
+        if: always()
+        shell: pwsh
+        run: |
+          if ($env:VERITY_CERT_THUMBPRINT) {
+            Remove-Item -LiteralPath "Cert:\CurrentUser\My\$env:VERITY_CERT_THUMBPRINT" -Force -ErrorAction SilentlyContinue
+          }

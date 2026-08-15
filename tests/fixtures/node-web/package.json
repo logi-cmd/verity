@@ -1,0 +1,10 @@
+{
+  "name": "verity-node-web-fixture",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "build": "node build.mjs",
+    "test": "node --test test.mjs",
+    "start": "node server.mjs"
+  }
+}

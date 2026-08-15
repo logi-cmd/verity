@@ -1,0 +1,20 @@
+[package]
+name = "verity-core"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+authors.workspace = true
+description = "Deterministic repository inspection and verification contracts for Verity"
+
+[dependencies]
+serde.workspace = true
+serde_json.workspace = true
+sha2.workspace = true
+hex.workspace = true
+thiserror.workspace = true
+chrono.workspace = true
+uuid.workspace = true
+ignore.workspace = true
+
+[dev-dependencies]
+tempfile = "3"

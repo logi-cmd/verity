@@ -1,0 +1,21 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "verity-site",
+  "compatibility_date": "2026-08-16",
+  "workers_dev": false,
+  "assets": {
+    "directory": "./site",
+    "html_handling": "auto-trailing-slash",
+    "not_found_handling": "404-page"
+  },
+  "routes": [
+    {
+      "pattern": "agent-guardrails.com",
+      "custom_domain": true
+    },
+    {
+      "pattern": "www.agent-guardrails.com",
+      "custom_domain": true
+    }
+  ]
+}
