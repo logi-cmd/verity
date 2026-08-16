@@ -8,7 +8,7 @@
 [![Source beta](https://img.shields.io/badge/source-v0.1.0--beta.2-9b82ff)](https://agent-guardrails.com/download/)
 [![License: MPL-2.0](https://img.shields.io/badge/license-MPL--2.0-c9ab73)](./LICENSE)
 
-[Official download](https://agent-guardrails.com/download/) · [How it works](https://agent-guardrails.com/how-it-works/) · [Verification receipts](https://agent-guardrails.com/verification-receipts/) · [Supported stacks](https://agent-guardrails.com/supported-stacks/)
+[Official download](https://agent-guardrails.com/download/) · [How it works](https://agent-guardrails.com/how-it-works/) · [Verification receipts](https://agent-guardrails.com/verification-receipts/) · [Supported stacks](https://agent-guardrails.com/supported-stacks/) · [Code signing policy](./docs/code-signing-policy.md)
 
 ![Verity Desktop showing a local verification path](./site/assets/verity-desktop.png)
 

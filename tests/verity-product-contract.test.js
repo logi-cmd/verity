@@ -29,6 +29,16 @@ test("desktop package keeps only the focused visual runtimes", async () => {
   assert.equal(dependencies["robust-predicates"], undefined, "the retired topology predicate runtime must be absent");
 });
 
+test("Windows MSI uses a numeric version that matches the public beta", async () => {
+  const rootManifest = JSON.parse(await text("package.json"));
+  const tauri = JSON.parse(await text("desktop/src-tauri/tauri.conf.json"));
+  assert.equal(tauri.version, rootManifest.version);
+
+  const beta = rootManifest.version.match(/^(\d+)\.(\d+)\.(\d+)-beta\.(\d+)$/);
+  assert.ok(beta, "the public beta version must use major.minor.patch-beta.number");
+  assert.equal(tauri.bundle.windows.wix.version, beta.slice(1).join("."));
+});
+
 test("desktop uses one continuous task surface and stable action ids", async () => {
   const app = await text("desktop/src/app/App.jsx");
   const css = await text("desktop/src/verity.css");

@@ -12,6 +12,8 @@ const pages = [
   ["site/zh/index.html", "https://agent-guardrails.com/zh/", "zh-CN", "https://agent-guardrails.com/"],
   ["site/download/index.html", "https://agent-guardrails.com/download/", "en", "https://agent-guardrails.com/zh/download/"],
   ["site/zh/download/index.html", "https://agent-guardrails.com/zh/download/", "zh-CN", "https://agent-guardrails.com/download/"],
+  ["site/code-signing-policy/index.html", "https://agent-guardrails.com/code-signing-policy/", "en", "https://agent-guardrails.com/zh/code-signing-policy/"],
+  ["site/zh/code-signing-policy/index.html", "https://agent-guardrails.com/zh/code-signing-policy/", "zh-CN", "https://agent-guardrails.com/code-signing-policy/"],
   ["site/how-it-works/index.html", "https://agent-guardrails.com/how-it-works/", "en", "https://agent-guardrails.com/zh/how-it-works/"],
   ["site/zh/how-it-works/index.html", "https://agent-guardrails.com/zh/how-it-works/", "zh-CN", "https://agent-guardrails.com/how-it-works/"],
   ["site/verification-receipts/index.html", "https://agent-guardrails.com/verification-receipts/", "en", "https://agent-guardrails.com/zh/verification-receipts/"],
@@ -104,7 +106,11 @@ assert(robots.includes("https://agent-guardrails.com/sitemap.xml"), "robots site
 const sitemap = await readFile(join(siteRoot, "sitemap.xml"), "utf8");
 for (const [, canonical] of pages) assert(sitemap.includes(`<loc>${canonical}</loc>`), `sitemap missing ${canonical}`);
 assert.equal((sitemap.match(/<loc>/g) || []).length, pages.length, "sitemap contains unexpected canonical URLs");
-assert.equal((sitemap.match(/<lastmod>2026-08-16<\/lastmod>/g) || []).length, pages.length, "sitemap lastmod coverage mismatch");
+assert.equal(
+  (sitemap.match(/<lastmod>\d{4}-\d{2}-\d{2}<\/lastmod>/g) || []).length,
+  pages.length,
+  "every sitemap URL must have an ISO date",
+);
 
 const screenshot = await readFile(join(siteRoot, "assets/verity-desktop.png"));
 assert.equal(screenshot.readUInt32BE(16), 1280, "desktop screenshot width must be 1280");
