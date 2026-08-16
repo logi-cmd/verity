@@ -12,6 +12,7 @@ import { BlockerBranch } from "./BlockerBranch.jsx";
 import { PhaseEvidenceRail } from "./PhaseEvidenceRail.jsx";
 import { VerificationEvidencePath } from "./VerificationEvidencePath.jsx";
 import { tauriApi } from "./tauriApi.js";
+import appIcon from "./assets/app-icon.png";
 import {
   VerificationWorkspaceProvider,
   useVerificationWorkspace,
@@ -218,7 +219,7 @@ function StatusMark({ state }) {
 }
 
 function TitleBar() {
-  return <header className="vr-titlebar" data-tauri-drag-region><div className="vr-brand" data-tauri-drag-region><span className="vr-shield"><ShieldCheck /></span><span>Verity</span><small>Beta</small></div><div className="vr-window-controls"><button type="button" aria-label="Minimize" data-action-id="window.minimize" onClick={() => tauriApi.minimize().catch(() => null)}><Minus /></button><button type="button" aria-label="Maximize" data-action-id="window.maximize" onClick={() => tauriApi.toggleMaximize().catch(() => null)}><Square /></button><button type="button" aria-label="Close" data-action-id="window.close" onClick={() => tauriApi.close().catch(() => null)}><X /></button></div></header>;
+  return <header className="vr-titlebar" data-tauri-drag-region><div className="vr-brand" data-tauri-drag-region><span className="vr-shield"><img src={appIcon} alt="" /></span><span>Verity</span><small>Beta</small></div><div className="vr-window-controls"><button type="button" aria-label="Minimize" data-action-id="window.minimize" onClick={() => tauriApi.minimize().catch(() => null)}><Minus /></button><button type="button" aria-label="Maximize" data-action-id="window.maximize" onClick={() => tauriApi.toggleMaximize().catch(() => null)}><Square /></button><button type="button" aria-label="Close" data-action-id="window.close" onClick={() => tauriApi.close().catch(() => null)}><X /></button></div></header>;
 }
 
 function Sidebar({ active, setActive, t }) {

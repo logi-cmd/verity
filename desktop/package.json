@@ -2,7 +2,7 @@
   "name": "@verity/desktop",
   "version": "0.1.0-beta.2",
   "private": true,
-  "description": "Verity deterministic local run verification desktop application",
+  "description": "Verity checks whether a trusted repository can build, test, and launch on this computer",
   "license": "MPL-2.0",
   "type": "module",
   "scripts": {

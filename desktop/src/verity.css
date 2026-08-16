@@ -64,8 +64,8 @@ code { font-family: "Geist Mono Variable", "SFMono-Regular", Consolas, monospace
 
 .vr-brand { display: flex; align-items: center; gap: 9px; font-size: 13px; font-weight: 720; letter-spacing: 0.01em; }
 .vr-brand small { color: var(--muted); font-size: 9px; text-transform: uppercase; letter-spacing: 0.14em; border-left: 1px solid var(--line); padding-left: 9px; }
-.vr-shield { width: 22px; height: 22px; display: grid; place-items: center; color: #c6aa87; background: linear-gradient(145deg, rgba(173, 139, 99, 0.18), rgba(110, 86, 60, 0.04)); border: 1px solid rgba(187, 151, 110, 0.28); border-radius: 6px; box-shadow: inset 0 1px rgba(255, 255, 255, 0.06); }
-.vr-shield svg { width: 14px; height: 14px; }
+.vr-shield { width: 24px; height: 24px; display: grid; place-items: center; }
+.vr-shield img { width: 24px; height: 24px; border-radius: 6px; object-fit: cover; }
 .vr-window-controls { align-self: stretch; display: flex; }
 .vr-window-controls button { width: 44px; border: 0; background: transparent; color: #8e94a2; display: grid; place-items: center; transition: background 140ms ease, color 140ms ease; }
 .vr-window-controls svg { width: 14px; height: 14px; }

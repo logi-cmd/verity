@@ -1,13 +1,13 @@
 {
   "name": "Verity",
   "short_name": "Verity",
-  "description": "Local-first repository run verification",
+  "description": "Checks whether a trusted repository can build, test, and launch on this computer",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#09090d",
   "theme_color": "#09090d",
   "icons": [
-    { "src": "/favicon.png", "sizes": "512x512", "type": "image/png" },
+    { "src": "/assets/app-icon.png", "sizes": "512x512", "type": "image/png" },
     { "src": "/favicon.svg", "sizes": "any", "type": "image/svg+xml" }
   ]
 }

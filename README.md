@@ -1,3 +1,5 @@
+<img src="./site/favicon.svg" width="64" height="64" alt="Verity shield">
+
 # Verity
 
 **Verity checks whether a repository you trust can build, test, launch, and pass its real checks on your computer.**

@@ -2,7 +2,7 @@
   "name": "verity",
   "version": "0.1.0-beta.2",
   "private": true,
-  "description": "Deterministic local run verification for unfamiliar trusted repositories",
+  "description": "Checks whether a trusted repository can build, test, launch, and pass its real checks on this computer",
   "license": "MPL-2.0",
   "type": "module",
   "scripts": {

@@ -1,1 +1,11 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 72" role="img" aria-label="Verity shield"><path d="M32 3 58 14l-5 37-21 18L11 51 6 14Z" fill="#101018" stroke="#c9ab73" stroke-width="3"/><path d="m21 28 11 25 12-34" fill="none" stroke="#9b82ff" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Verity shield">
+  <rect x="2" y="2" width="60" height="60" rx="14" fill="#f2ebdc"/>
+  <path d="M32 7 53 18v16c0 12-7 20-21 25C18 54 11 46 11 34V18Z" fill="#ca6245" stroke="#6e3f30" stroke-width="2"/>
+  <path d="M32 12 48 20v14c0 9-5 15-16 20-11-5-16-11-16-20V20Z" fill="#f2ebdc" stroke="#fff8e9" stroke-width="2"/>
+  <g fill="#38342a" stroke="#1f1d18" stroke-width="1">
+    <path d="M20 24h24v4H20zM20 36h24v4H20z"/>
+    <path d="M23 21h4v22h-4zM30 19h4v24h-4zM37 21h4v22h-4z"/>
+  </g>
+  <circle cx="32" cy="45" r="8" fill="#697044" stroke="#f2ebdc" stroke-width="2"/>
+  <path d="m28 45 3 3 6-7" fill="none" stroke="#fff8e9" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
