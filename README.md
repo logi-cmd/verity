@@ -1,6 +1,6 @@
 # Verity
 
-**Local-first verification that a trusted repository can build, test, launch, and pass a real machine oracle on this computer.**
+**Verity checks whether a repository you trust can build, test, launch, and pass its real checks on your computer.**
 
 [![CI](https://github.com/logi-cmd/verity/actions/workflows/ci.yml/badge.svg)](https://github.com/logi-cmd/verity/actions/workflows/ci.yml)
 [![Source beta](https://img.shields.io/badge/source-v0.1.0--beta.2-9b82ff)](https://agent-guardrails.com/download/)
@@ -12,7 +12,7 @@
 
 ## What `verified` means
 
-Verity detects supported targets from committed manifests and locks, records the evidence behind every planned command, executes an isolated repository snapshot, and requires a target-specific machine oracle. It signs a local receipt only when every required phase passes against the unchanged snapshot.
+Verity reads committed manifests, lockfiles, scripts, and test settings to find runnable targets. It records why each command is needed, runs an isolated copy of the repository, and checks the result in a way that fits the target. It signs a local receipt only when every required step passes and the source has not changed.
 
 A running process, an open port, or a visible window is not enough. Missing locks, ambiguous commands, snapshot drift, an unavailable runtime, and a weak oracle remain blocked or explicitly unverified.
 
@@ -49,7 +49,7 @@ verity verify-receipt C:\path\to\receipt.json --repository C:\path\to\repository
 verity runtime doctor
 ```
 
-`verify-receipt` emits the bounded `verity-receipt-verification.v1` result. It accepts only a current `verity-verification-receipt.v3` receipt with a valid Ed25519 signature, matching repository and snapshot fingerprints, and a `verified` result. The machine response excludes source, paths, logs, and command output.
+`verify-receipt` returns `verity-receipt-verification.v1`. It accepts only a current `verity-verification-receipt.v3` receipt with a valid Ed25519 signature, matching repository and snapshot fingerprints, and a `verified` result. The JSON response does not include source, paths, logs, or command output.
 
 ## Agent Guardrails integration
 
@@ -65,7 +65,7 @@ An accepted receipt provides runtime verification evidence only. It does not sat
 
 Deterministic adapters are implemented for Node.js, Deno, Bun, static web, Rust, Tauri, Python, Go, Godot, Docker Compose, Java, Kotlin, C, C++, .NET, PHP, and Ruby.
 
-Adapter availability is not a claim of equal maturity. Each target reports plan completeness, current-machine compatibility, and oracle strength separately. See the [support status](https://agent-guardrails.com/supported-stacks/) and [release evidence](./docs/release-status.md) for the current bounded status.
+The adapters do not all have the same level of testing. Each target reports whether its plan is complete, whether it can run on the current machine, and how the result is checked. See [support status](https://agent-guardrails.com/supported-stacks/) and [release evidence](./docs/release-status.md) for details.
 
 ## Local data boundary
 

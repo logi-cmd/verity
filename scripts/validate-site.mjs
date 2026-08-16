@@ -39,6 +39,8 @@ const supportFiles = [
   "site/assets/verity-social-preview.png",
 ];
 
+const escapeRegExp = (value) => value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+
 for (const path of [...pages.map(([path]) => path), ...supportFiles]) {
   assert((await stat(join(root, path))).isFile(), `${path} must exist`);
 }
@@ -48,23 +50,33 @@ for (const [path, canonical, language, alternate] of pages) {
   const html = await readFile(join(root, path), "utf8");
   pageContents.push(html);
   assert.match(html, new RegExp(`<html lang=["']${language}["']`), `${path} must declare ${language}`);
-  assert(html.includes(`<link rel="canonical" href="${canonical}">`), `${path} canonical mismatch`);
+  assert.match(
+    html,
+    new RegExp(`<link\\s+rel=["']canonical["']\\s+href=["']${escapeRegExp(canonical)}["']\\s*/?>`),
+    `${path} canonical mismatch`,
+  );
   assert(html.includes(`hreflang="en"`), `${path} English alternate missing`);
   assert(html.includes(`hreflang="zh-CN"`), `${path} Chinese alternate missing`);
   assert(html.includes(`hreflang="x-default"`), `${path} x-default alternate missing`);
   assert(html.includes(`href="${alternate}"`), `${path} reciprocal alternate missing`);
-  for (const marker of [
-    "<title>",
-    '<meta name="description"',
-    '<meta property="og:title"',
-    '<meta property="og:description"',
-    '<meta property="og:url"',
-    '<meta property="og:image"',
-    '<meta name="twitter:card"',
-    '<meta name="twitter:title"',
-    '<meta name="twitter:description"',
-    '<meta name="twitter:image"',
-  ]) assert(html.includes(marker), `${path} missing ${marker}`);
+  assert(html.includes("<title>"), `${path} missing title`);
+  for (const [attribute, value] of [
+    ["name", "description"],
+    ["property", "og:title"],
+    ["property", "og:description"],
+    ["property", "og:url"],
+    ["property", "og:image"],
+    ["name", "twitter:card"],
+    ["name", "twitter:title"],
+    ["name", "twitter:description"],
+    ["name", "twitter:image"],
+  ]) {
+    assert.match(
+      html,
+      new RegExp(`<meta\\s+[^>]*${attribute}=["']${escapeRegExp(value)}["'][^>]*>`),
+      `${path} missing ${value}`,
+    );
+  }
   assert(!/[—–]/u.test(html), `${path} contains a visible em or en dash`);
 }
 

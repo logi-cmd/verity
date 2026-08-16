@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>Verity: Local repository run verification</title>
-  <meta name="description" content="Verify whether a trusted repository can build, test, launch, and pass a real machine oracle on this computer. Local, inspectable, and evidence-first.">
+  <meta name="description" content="Check whether a repository you trust can build, test, launch, and pass its real checks on your computer. Verity runs locally and shows what it checked.">
   <meta name="theme-color" content="#09090d">
   <link rel="canonical" href="https://agent-guardrails.com/">
   <link rel="alternate" hreflang="en" href="https://agent-guardrails.com/">
@@ -13,7 +13,7 @@
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="Verity">
   <meta property="og:title" content="Verity: Know what actually runs">
-  <meta property="og:description" content="Local-first build, test, launch, and machine-oracle verification for trusted repositories.">
+  <meta property="og:description" content="Check whether a trusted repository can build, test, and launch on your computer, then save a signed local receipt.">
   <meta property="og:url" content="https://agent-guardrails.com/">
   <meta property="og:image" content="https://agent-guardrails.com/assets/verity-social-preview.png">
   <meta property="og:image:width" content="1280">
@@ -21,7 +21,7 @@
   <meta property="og:image:alt" content="Verity Desktop showing a verified local run">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Verity: Know what actually runs">
-  <meta name="twitter:description" content="Local-first repository run verification with signed local receipts.">
+  <meta name="twitter:description" content="Run a trusted repository on your computer and save a signed receipt of what passed.">
   <meta name="twitter:image" content="https://agent-guardrails.com/assets/verity-social-preview.png">
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="/favicon.png">
@@ -30,7 +30,7 @@
   <link rel="preload" href="/assets/verity-desktop.webp" as="image" type="image/webp" fetchpriority="high">
   <link rel="stylesheet" href="/styles.css">
   <script src="/site.js" defer></script>
-  <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","name":"Verity","url":"https://agent-guardrails.com/","inLanguage":["en","zh-CN"]},{"@type":"SoftwareSourceCode","name":"Verity","description":"Local-first verification that a trusted repository can build, test, launch, and pass a real machine oracle.","codeRepository":"https://github.com/logi-cmd/verity","license":"https://spdx.org/licenses/MPL-2.0.html","programmingLanguage":["Rust","JavaScript"],"runtimePlatform":["Windows","macOS","Linux"]}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","name":"Verity","url":"https://agent-guardrails.com/","inLanguage":["en","zh-CN"]},{"@type":"SoftwareSourceCode","name":"Verity","description":"Verity checks whether a repository you trust can build, test, launch, and pass its real checks on your computer.","codeRepository":"https://github.com/logi-cmd/verity","license":"https://spdx.org/licenses/MPL-2.0.html","programmingLanguage":["Rust","JavaScript"],"runtimePlatform":["Windows","macOS","Linux"]}]}</script>
 </head>
 <body>
   <a class="skip-link" href="#content">Skip to content</a>
@@ -44,7 +44,7 @@
       <div class="hero-copy" data-reveal="copy">
         <p class="status-line"><span class="status-dot" aria-hidden="true"></span>Source beta 0.1.0-beta.2 is available</p>
         <h1>Know what actually runs.</h1>
-        <p class="lede">Verity follows committed evidence, runs an isolated snapshot, and signs a local receipt only after the target's real machine oracle passes.</p>
+        <p class="lede">Verity reads the files that define how a project runs, checks an isolated copy, and signs a local receipt only when the required tests and run checks pass.</p>
         <div class="hero-actions"><a class="button primary" href="/download/">Get source beta</a><a class="text-link" href="/how-it-works/">See the verification path</a></div>
         <p class="hero-note"><span>No login</span><span>No telemetry</span><span>MPL-2.0</span></p>
       </div>
@@ -53,20 +53,20 @@
         <figcaption class="frame-caption"><span>Isolated public fixture</span><strong>Machine oracle passed</strong></figcaption>
       </figure>
     </section>
-    <section class="evidence-band" aria-label="Verification contract">
-      <div class="evidence-line wrap"><div><span>Input</span><strong>Trusted repository snapshot</strong></div><div><span>Decision</span><strong>Observed machine result</strong></div><div><span>Output</span><strong>Signed local receipt</strong></div><div><span>Boundary</span><strong>No remote certification</strong></div></div>
+    <section class="evidence-band" aria-label="What Verity checks">
+      <div class="evidence-line wrap"><div><span>Input</span><strong>A copy of your repository</strong></div><div><span>Check</span><strong>What passed on this machine</strong></div><div><span>Output</span><strong>A signed local receipt</strong></div><div><span>Limit</span><strong>Not a security certificate</strong></div></div>
     </section>
     <section class="section wrap" id="workflow">
-      <header class="section-head"><h2>Evidence travels with every decision.</h2><p>Verity does not run README snippets or infer what a project should do. Each stage is tied to committed declarations, an observed environment, and a result that can be explained later.</p></header>
+      <header class="section-head"><h2>See why each command ran.</h2><p>Verity does not copy commands from a README or guess how a project should run. It uses committed project files, records the machine environment, and keeps the result with the receipt.</p></header>
       <div class="sequence">
-        <article><span class="step">01</span><h3>Detect the executable target</h3><p>Locks, manifests, scripts, framework entry points, and checked-in test configuration produce a bounded plan. Ambiguity blocks the run.</p></article>
+        <article><span class="step">01</span><h3>Find what can run</h3><p>Lockfiles, manifests, scripts, framework entry points, and committed test settings define the plan. Verity stops if they disagree.</p></article>
         <article><span class="step">02</span><h3>Execute an isolated snapshot</h3><p>The repository fingerprint is recorded before execution. Escaping links and source changes invalidate the run instead of being silently accepted.</p></article>
-        <article><span class="step">03</span><h3>Require a machine oracle</h3><p>Declared tests, health checks, browser behavior, or checked-in smoke automation must pass. Process and port signals alone remain unverified.</p></article>
-        <article><span class="step">04</span><h3>Sign the bounded result</h3><p>A verified receipt binds the result to its snapshot and environment with a local Ed25519 signature. It can be checked again without exposing logs or source.</p></article>
+        <article><span class="step">03</span><h3>Check real behavior</h3><p>Declared tests, health checks, browser behavior, or committed smoke tests must pass. A running process or open port is not enough.</p></article>
+        <article><span class="step">04</span><h3>Sign the result</h3><p>The receipt ties the result to the repository copy and machine environment with a local Ed25519 signature. You can check it again without sharing logs or source.</p></article>
       </div>
     </section>
     <section class="section wrap">
-      <header class="section-head"><h2>Broad detection. Precise status.</h2><p>Adapter availability and release maturity are separate facts. Verity reports plan completeness, environment compatibility, and oracle strength for each selected target.</p></header>
+      <header class="section-head"><h2>Support varies by stack.</h2><p>Finding a target does not mean every check is ready. Verity reports whether the plan is complete, whether the target can run on this machine, and how strong the final check is.</p></header>
       <div class="support-summary">
         <article><h3>Web and application stacks</h3><p>Node.js, Deno, Bun, static web, Python, Go, Java, Kotlin, .NET, PHP, Ruby, and Docker Compose.</p><code>detected from committed runtime evidence</code></article>
         <article><h3>Native and toolchain stacks</h3><p>Rust, Tauri, Godot, C, and C++ use container execution or an explicitly confirmed native snapshot when required.</p><code>native execution is never a malware boundary</code></article>
@@ -74,7 +74,7 @@
       <div class="hero-actions"><a class="button secondary" href="/supported-stacks/">Read support and limits</a></div>
     </section>
     <section class="section wrap rules">
-      <h2>Strict about what verified means.</h2>
+      <h2>What "verified" does and does not mean</h2>
       <div class="rule-list">
         <div class="rule"><strong>Trusted source only</strong><p>Verity is not designed to contain hostile code or decide that unknown software is safe.</p></div>
         <div class="rule"><strong>Snapshot bound</strong><p>A repository change after the recorded run makes the receipt stale for the current files.</p></div>
@@ -82,8 +82,8 @@
         <div class="rule"><strong>Local data</strong><p>Raw receipts, paths, logs, source, and command output remain on the current machine.</p></div>
       </div>
     </section>
-    <section class="closing wrap"><h2>Inspect the tool that decides verified.</h2><p>The Desktop app, CLI, adapters, runner, and receipt logic are open source under MPL-2.0. Start with the source beta or audit the implementation first.</p><div class="hero-actions"><a class="button primary" href="/download/">Get source beta</a><a class="text-link" href="https://github.com/logi-cmd/verity">Inspect on GitHub</a></div></section>
+    <section class="closing wrap"><h2>Read the code behind the result.</h2><p>The Desktop app, CLI, adapters, runner, and receipt code are open source under MPL-2.0. Download the source beta or inspect it on GitHub.</p><div class="hero-actions"><a class="button primary" href="/download/">Get source beta</a><a class="text-link" href="https://github.com/logi-cmd/verity">Inspect on GitHub</a></div></section>
   </main>
-  <footer class="footer wrap"><span class="footer-brand">Verity: local run truth</span><div><a href="/privacy/">Privacy</a><a href="/terms/">Terms</a><a href="https://github.com/logi-cmd/verity/issues">Feedback</a><a href="https://github.com/logi-cmd/verity">GitHub</a></div></footer>
+  <footer class="footer wrap"><span class="footer-brand">Verity runs on your machine</span><div><a href="/privacy/">Privacy</a><a href="/terms/">Terms</a><a href="https://github.com/logi-cmd/verity/issues">Feedback</a><a href="https://github.com/logi-cmd/verity">GitHub</a></div></footer>
 </body>
 </html>
