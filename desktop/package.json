@@ -1,6 +1,6 @@
 {
   "name": "@verity/desktop",
-  "version": "0.1.0-beta.1",
+  "version": "0.1.0-beta.2",
   "private": true,
   "description": "Verity deterministic local run verification desktop application",
   "license": "MPL-2.0",

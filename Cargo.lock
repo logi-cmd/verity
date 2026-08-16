@@ -4201,7 +4201,7 @@ dependencies = [
 
 [[package]]
 name = "verity-adapters"
-version = "0.1.0-beta.1"
+version = "0.1.0-beta.2"
 dependencies = [
  "chrono",
  "globset",
@@ -4218,7 +4218,7 @@ dependencies = [
 
 [[package]]
 name = "verity-cli"
-version = "0.1.0-beta.1"
+version = "0.1.0-beta.2"
 dependencies = [
  "clap",
  "serde",
@@ -4231,7 +4231,7 @@ dependencies = [
 
 [[package]]
 name = "verity-core"
-version = "0.1.0-beta.1"
+version = "0.1.0-beta.2"
 dependencies = [
  "chrono",
  "hex",
@@ -4246,7 +4246,7 @@ dependencies = [
 
 [[package]]
 name = "verity-desktop"
-version = "0.1.0-beta.1"
+version = "0.1.0-beta.2"
 dependencies = [
  "arboard",
  "chrono",
@@ -4264,7 +4264,7 @@ dependencies = [
 
 [[package]]
 name = "verity-runner"
-version = "0.1.0-beta.1"
+version = "0.1.0-beta.2"
 dependencies = [
  "chrono",
  "dirs",

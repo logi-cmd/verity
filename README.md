@@ -1,63 +1,89 @@
 # Verity
 
-Verity is an open-source local tool that answers one bounded question: **can this trusted but unfamiliar repository run on this machine, under the recorded environment?**
+**Local-first verification that a trusted repository can build, test, launch, and pass a real machine oracle on this computer.**
 
-It detects supported project targets, shows the exact evidence behind every planned command, executes an isolated repository snapshot, and signs a local verification receipt only when the target's machine oracle passes. It does not infer product purpose, score delivery readiness, manage plugins, or claim that an unknown repository is safe.
+[![CI](https://github.com/logi-cmd/verity/actions/workflows/ci.yml/badge.svg)](https://github.com/logi-cmd/verity/actions/workflows/ci.yml)
+[![Source beta](https://img.shields.io/badge/source-v0.1.0--beta.2-9b82ff)](https://agent-guardrails.com/download/)
+[![License: MPL-2.0](https://img.shields.io/badge/license-MPL--2.0-c9ab73)](./LICENSE)
 
-## Implemented adapters (pre-beta)
+[Official download](https://agent-guardrails.com/download/) · [How it works](https://agent-guardrails.com/how-it-works/) · [Verification receipts](https://agent-guardrails.com/verification-receipts/) · [Supported stacks](https://agent-guardrails.com/supported-stacks/)
 
-- Node.js
-- Deno
-- Bun
-- Static web sites
-- Rust
-- Python
-- Go
-- Godot (native confirmation required)
-- Docker Compose products
-- Java and Kotlin through Maven or a checked-in Gradle Wrapper
-- C and C++ through CMake, Meson, or Make (native confirmation required)
-- .NET through locked NuGet restore
-- PHP through Composer
-- Ruby through Bundler
+![Verity Desktop showing a local verification path](./site/assets/verity-desktop.png)
 
-Every logical target has three independent states: plan completeness, current-machine environment compatibility, and oracle strength. Product targets are shown first; workspace members, fixtures, examples, libraries, and tools remain available as advanced components and are never presented as separate products by default. A running process, open port, or visible window is not enough for `verified`.
+## What `verified` means
 
-After a `verified` run, Verity can inspect deterministic cleanup candidates in the same task. Exact duplicate and residue detection is always available. Stack-specific analysis uses Knip, cargo-machete, Vulture, and Go deadcode when the corresponding analyzer is available; the UI reports whether each analyzer completed, was not installed, was unsafe to promote, failed, or did not apply. Analyzer findings remain report-only unless the finding is a file-level candidate with an explicit entry configuration and Verity can rerun the unchanged baseline oracle.
+Verity detects supported targets from committed manifests and locks, records the evidence behind every planned command, executes an isolated repository snapshot, and requires a target-specific machine oracle. It signs a local receipt only when every required phase passes against the unchanged snapshot.
 
-Verity removes candidates only inside an isolated snapshot, reruns the same oracle, and labels a group `removal_verified` only when the result remains `verified`. Tests, migrations, CI, deployment files, licenses, documentation, schemas, and public API surfaces stay report-only. A `started_unverified` run can receive a candidate report but cannot produce a write-back action.
+A running process, an open port, or a visible window is not enough. Missing locks, ambiguous commands, snapshot drift, an unavailable runtime, and a weak oracle remain blocked or explicitly unverified.
+
+Verity is for source you already trust. It is not a hostile-code sandbox, remote attestation service, malware verdict, or general security certification.
+
+## Source beta
+
+The current release is `v0.1.0-beta.2`. The official download page links to the source release and release evidence. Prebuilt desktop installers are unavailable until trusted signing and platform acceptance evidence exist.
+
+Build the CLI from source:
+
+```powershell
+git clone https://github.com/logi-cmd/verity.git
+cd verity
+cargo build --release -p verity-cli
+cargo run -p verity-cli -- inspect C:\path\to\repository --json
+```
+
+Run the Desktop web build or Tauri development app:
+
+```powershell
+npm --prefix desktop install
+npm run build:desktop-web
+npm run dev:desktop
+```
 
 ## CLI
 
 ```powershell
-cargo run -p verity-cli -- inspect C:\path\to\repository --json
-cargo run -p verity-cli -- check C:\path\to\repository --target node-0123456789
-cargo run -p verity-cli -- receipt SESSION_ID
-cargo run -p verity-cli -- verify-receipt C:\path\to\receipt.json --repository C:\path\to\repository --json
-cargo run -p verity-cli -- runtime doctor
+verity inspect C:\path\to\repository --json
+verity check C:\path\to\repository --target node-0123456789
+verity receipt SESSION_ID
+verity verify-receipt C:\path\to\receipt.json --repository C:\path\to\repository --json
+verity runtime doctor
 ```
 
-Human-readable `inspect` output includes the target ID, relative path, role, selection reason, blocker source, and a copyable `check --target` command.
+`verify-receipt` emits the bounded `verity-receipt-verification.v1` result. It accepts only a current `verity-verification-receipt.v3` receipt with a valid Ed25519 signature, matching repository and snapshot fingerprints, and a `verified` result. The machine response excludes source, paths, logs, and command output.
 
-## Desktop
+## Agent Guardrails integration
+
+[Agent Guardrails](https://github.com/logi-cmd/agent-guardrails) remains an independent MIT project. When a receipt is supplied explicitly, it invokes the Verity CLI without a shell:
 
 ```powershell
-npm --prefix desktop install
-npm run dev:desktop
+agent-guardrails check --verity-receipt C:\path\to\receipt.json --review
 ```
 
-The desktop app has three top-level destinations: Current check, History, and Settings. No account is required. Verity has no telemetry transport. A local allowlisted diagnostic report can be previewed and saved manually; nothing is uploaded automatically.
+An accepted receipt provides runtime verification evidence only. It does not satisfy scope, security, protected-path, required-command, or evidence-file requirements.
+
+## Supported stacks
+
+Deterministic adapters are implemented for Node.js, Deno, Bun, static web, Rust, Tauri, Python, Go, Godot, Docker Compose, Java, Kotlin, C, C++, .NET, PHP, and Ruby.
+
+Adapter availability is not a claim of equal maturity. Each target reports plan completeness, current-machine compatibility, and oracle strength separately. See the [support status](https://agent-guardrails.com/supported-stacks/) and [release evidence](./docs/release-status.md) for the current bounded status.
+
+## Local data boundary
+
+No account is required. Verity has no telemetry or upload transport. Repository snapshots, raw receipts, paths, logs, source, and command output remain on the current machine. An allowlisted diagnostic report is created only when you explicitly preview and save it.
 
 ## Development
 
 ```powershell
+cargo fmt --all -- --check
 cargo test --workspace
 npm run test:contracts
+npm run test:licenses
+npm run test:site
 npm run build:desktop-web
 ```
 
-Verity is beta software. Current release evidence is recorded in [docs/release-status.md](docs/release-status.md). The local signature proves that a receipt has not changed since this installation signed it; it is not a remote Verity certification.
+Contributions are welcome through [issues](https://github.com/logi-cmd/verity/issues) and pull requests. Read [CONTRIBUTING.md](./CONTRIBUTING.md) and [SECURITY.md](./SECURITY.md) before submitting a change.
 
 ## License
 
-MPL-2.0. A future team control plane is outside this local open-source workspace. Raw receipts, paths, logs, source, and command output remain local; this repository contains no upload interface.
+MPL-2.0. See [LICENSE](./LICENSE).

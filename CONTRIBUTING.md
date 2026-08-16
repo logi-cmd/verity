@@ -12,6 +12,6 @@ npm run test:contracts
 npm run build:desktop-web
 ```
 
-Do not add telemetry, account, payment, cloud-upload, or hosted-execution code to the local core. New commands must come from repository evidence, secrets must be redacted, and missing evidence must block rather than guess.
+Keep the local core self-contained: no telemetry or network transport for repository data. New commands must come from repository evidence, secrets must be redacted, and missing evidence must block rather than guess.
 
 By contributing, you agree that your contribution is licensed under MPL-2.0.

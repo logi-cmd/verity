@@ -6,7 +6,7 @@ on:
       tag:
         description: Existing source release tag to receive signed assets
         required: true
-        default: v0.1.0-beta.1
+        default: v0.1.0-beta.2
 
 permissions:
   contents: write
@@ -94,7 +94,7 @@ jobs:
           $assets = Get-ChildItem release -File | Where-Object Name -ne 'release-manifest.json'
           $manifest = [ordered]@{
             schema = 'verity-release-manifest.v1'
-            version = '0.1.0-beta.1'
+            version = '0.1.0-beta.2'
             platform = 'windows-x64'
             trustedSignature = $true
             files = @($assets | ForEach-Object { [ordered]@{ name = $_.Name; sha256 = (Get-FileHash $_.FullName -Algorithm SHA256).Hash.ToLower() } })

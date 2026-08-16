@@ -1,9 +1,15 @@
 # Verity
 
-Verity is an MPL-2.0 local repository run-verification tool. It determines whether a trusted but unfamiliar repository can complete its explicit install, offline build, test, launch, and machine-oracle path in the current recorded environment.
+Verity is an MPL-2.0 local repository run-verification tool for trusted-source repositories.
 
-It does not infer business purpose, manage plugins, provide a knowledge graph, score delivery readiness, analyze malicious repositories, or claim remote certification.
+Canonical facts:
+- https://agent-guardrails.com/how-it-works/
+- https://agent-guardrails.com/verification-receipts/
+- https://agent-guardrails.com/supported-stacks/
+- https://agent-guardrails.com/download/
+- https://github.com/logi-cmd/verity
+- https://github.com/logi-cmd/verity/releases/tag/v0.1.0-beta.2
 
-Implemented deterministic detection: Node.js, Deno, Bun, static web, Rust, Tauri, Python, Go, Godot, Docker Compose, Java, Kotlin, C, C++, .NET, PHP, and Ruby. Public support remains gated on the documented real-project/platform matrix. A `verified` receipt requires every planned phase and a target-specific machine oracle to pass. Process, port, or window signals alone are insufficient.
+A `verified` result requires the declared build, test, launch, and target-specific machine oracle to pass against the recorded repository snapshot. Process, port, or window signals alone are insufficient.
 
-The public beta is not yet available. No unsigned installer should be represented as downloadable.
+Verity is not a hostile-code sandbox, malware verdict, remote attestation service, or security certification. Raw receipts, repository paths, logs, source, and command output remain on the current machine.

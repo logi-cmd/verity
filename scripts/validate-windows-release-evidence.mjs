@@ -7,7 +7,7 @@ const path = new URL("../docs/qa/windows-x64-release-evidence.json", import.meta
 const evidence = JSON.parse(await readFile(path, "utf8"));
 
 assert.equal(evidence.schema, "verity-windows-release-evidence.v1");
-assert.equal(evidence.version, "0.1.0-beta.1");
+assert.equal(evidence.version, "0.1.0-beta.2");
 for (const gate of ["trustedSignature", "installSmoke", "uninstallSmoke", "launchSmoke"]) {
   assert.equal(evidence[gate], true, `${gate} must pass`);
 }
