@@ -7,14 +7,18 @@
   "type": "module",
   "scripts": {
     "test": "npm run test:contracts && npm run test:rust",
-    "test:contracts": "node --test tests/verity-product-contract.test.js tests/verification-workspace-model.test.js tests/evidence-field-geometry.test.js tests/receipt-verification-contract.test.js",
+    "test:contracts": "node --test tests/verity-product-contract.test.js tests/verification-workspace-model.test.js tests/evidence-field-geometry.test.js tests/receipt-verification-contract.test.js tests/windows-release-acceptance.test.js",
     "test:licenses": "node scripts/audit-licenses.mjs",
     "test:site": "node scripts/validate-site.mjs",
     "test:rust": "cargo test --workspace",
     "build": "npm run build:desktop-web && cargo build --workspace",
     "build:desktop-web": "npm --prefix desktop run build:web",
     "check": "cargo check --workspace && npm run test:contracts",
-    "dev:desktop": "npm --prefix desktop run dev:desktop"
+    "dev:desktop": "npm --prefix desktop run dev:desktop",
+    "acceptance:windows:manifest": "node scripts/run-windows-release-acceptance.mjs --validate-manifest",
+    "acceptance:windows:preflight": "node scripts/run-windows-release-acceptance.mjs --preflight-projects",
+    "acceptance:windows": "node scripts/run-windows-release-acceptance.mjs",
+    "validate:windows-release": "node scripts/validate-windows-release-evidence.mjs"
   },
   "engines": {
     "node": ">=20.0.0"

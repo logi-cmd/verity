@@ -1,0 +1,110 @@
+{
+  "schema": "verity-windows-real-project-manifest.v1",
+  "projects": [
+    {
+      "id": "uuidjs-uuid",
+      "repository": "https://github.com/uuidjs/uuid",
+      "revision": "fd59f0277549d22cc7ec00a7b3b5c9bccb4d3c1d",
+      "stack": "node",
+      "relativeRoot": ""
+    },
+    {
+      "id": "isaacs-minimatch",
+      "repository": "https://github.com/isaacs/minimatch",
+      "revision": "ded1bbd01beca62a5978bc1650ed0a1ccf9039d5",
+      "stack": "node",
+      "relativeRoot": ""
+    },
+    {
+      "id": "axios-axios",
+      "repository": "https://github.com/axios/axios",
+      "revision": "e6824eec5fcf9da467a9792724396badc490c469",
+      "stack": "node",
+      "relativeRoot": ""
+    },
+    {
+      "id": "koajs-koa",
+      "repository": "https://github.com/koajs/koa",
+      "revision": "e145325bec7399e3359414badae4a248e7ae1c3b",
+      "stack": "node",
+      "relativeRoot": ""
+    },
+    {
+      "id": "lodash-lodash",
+      "repository": "https://github.com/lodash/lodash",
+      "revision": "a666ba591064c8011988275790ad7d625279f09c",
+      "stack": "node",
+      "relativeRoot": ""
+    },
+    {
+      "id": "tidwall-gjson",
+      "repository": "https://github.com/tidwall/gjson",
+      "revision": "7d8b3821e9d2acf35e8a226b63fcf801078e9b96",
+      "stack": "go",
+      "relativeRoot": ""
+    },
+    {
+      "id": "tidwall-sjson",
+      "repository": "https://github.com/tidwall/sjson",
+      "revision": "3a21ce7b0cab4e0f0d91eb8db4a3d0434622eeb8",
+      "stack": "go",
+      "relativeRoot": ""
+    },
+    {
+      "id": "stretchr-testify",
+      "repository": "https://github.com/stretchr/testify",
+      "revision": "959dbdacf1533e155162811ea90c90117a420463",
+      "stack": "go",
+      "relativeRoot": ""
+    },
+    {
+      "id": "cespare-xxhash",
+      "repository": "https://github.com/cespare/xxhash",
+      "revision": "ab37246c889f9db16b606fda1c232d659df9271d",
+      "stack": "go",
+      "relativeRoot": ""
+    },
+    {
+      "id": "uber-go-zap",
+      "repository": "https://github.com/uber-go/zap",
+      "revision": "018b91390e74732e9e40f8d356887b8d06461886",
+      "stack": "go",
+      "relativeRoot": ""
+    },
+    {
+      "id": "fsnotify-fsnotify",
+      "repository": "https://github.com/fsnotify/fsnotify",
+      "revision": "20b1e15ef3c70caeb37ea2bd184f48ef8382669e",
+      "stack": "go",
+      "relativeRoot": ""
+    },
+    {
+      "id": "clap-rs-clap",
+      "repository": "https://github.com/clap-rs/clap",
+      "revision": "5b81f1012da19f1474decfe7ffcfb437f59ccba4",
+      "stack": "rust",
+      "relativeRoot": ""
+    },
+    {
+      "id": "burntsushi-ripgrep",
+      "repository": "https://github.com/BurntSushi/ripgrep",
+      "revision": "3fce3b5bb0236da2df6d99672afb8a719642eca7",
+      "stack": "rust",
+      "relativeRoot": ""
+    },
+    {
+      "id": "sharkdp-fd",
+      "repository": "https://github.com/sharkdp/fd",
+      "revision": "ee20f426ddf338ac7ead5c5f00ea49258005caaf",
+      "stack": "rust",
+      "relativeRoot": ""
+    },
+    {
+      "id": "casey-just",
+      "repository": "https://github.com/casey/just",
+      "revision": "7c9dbbc3b5f48139f68e25da6c1047cb176ad839",
+      "stack": "rust",
+      "relativeRoot": ""
+    }
+  ]
+}

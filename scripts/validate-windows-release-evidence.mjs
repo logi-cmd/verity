@@ -1,19 +1,13 @@
 // SPDX-License-Identifier: MPL-2.0
-
-import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
+import { validateReleaseEvidence } from "./windows-release-acceptance-lib.mjs";
 
-const path = new URL("../docs/qa/windows-x64-release-evidence.json", import.meta.url);
-const evidence = JSON.parse(await readFile(path, "utf8"));
+const evidencePath = new URL("../docs/qa/windows-x64-release-evidence.json", import.meta.url);
+const manifestPath = new URL("../docs/qa/windows-x64-real-projects.json", import.meta.url);
+const packagePath = new URL("../package.json", import.meta.url);
+const evidence = JSON.parse(await readFile(evidencePath, "utf8"));
+const manifest = JSON.parse(await readFile(manifestPath, "utf8"));
+const packageManifest = JSON.parse(await readFile(packagePath, "utf8"));
 
-assert.equal(evidence.schema, "verity-windows-release-evidence.v1");
-assert.equal(evidence.version, "0.1.0-beta.2");
-for (const gate of ["trustedSignature", "installSmoke", "uninstallSmoke", "launchSmoke"]) {
-  assert.equal(evidence[gate], true, `${gate} must pass`);
-}
-assert(Array.isArray(evidence.projects), "projects must be an array");
-assert(evidence.projects.length >= 15, "at least 15 real-project results are required");
-assert.equal(new Set(evidence.projects.map(({ id }) => id)).size, evidence.projects.length, "project IDs must be unique");
-assert(evidence.projects.every(({ result }) => result === "passed"), "every real-project result must pass");
-
-console.log(`Validated ${evidence.projects.length} Windows x64 real-project results.`);
+validateReleaseEvidence(evidence, packageManifest.version, manifest);
+console.log(`Validated ${evidence.artifacts.length} signed installers and ${evidence.projects.length} Windows x64 real projects.`);
